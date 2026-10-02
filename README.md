@@ -46,43 +46,7 @@ All overlays (coupon creation, coupon detail, delete confirmation, channel manag
 
 The full architectural record — data flow, native-vs-web SQLite divergences, and the concrete bugs that shaped specific decisions (migration statement-splitting on Android, connection singletons, the `outline`-vs-`border` day-cell fix, and others) — is maintained in [`CLAUDE.md`](CLAUDE.md), which serves as this project's living engineering log as much as its AI-assistant briefing.
 
-## Repository structure
-
-```
-couponkeeper/
-├─ apps/
-│  ├─ mobile/        # Ionic + Vue 3 + Capacitor app — where development happens
-│  │  ├─ android/    # Native Android project, committed to git
-│  │  └─ src/
-│  │     ├─ views/       # CodesPage, CalendarPage, SettingsPage, TabsPage
-│  │     ├─ components/  # Shared UI: CodeCard, ChannelFilterChips, CouponFilterToolbar, CouponFormModal, CouponDetailModal, etc.
-│  │     ├─ stores/      # Pinia: settings, coupons, channels
-│  │     ├─ db/          # Drizzle schema, client, migrations, seed data
-│  │     ├─ utils/       # Pure logic: calendar grid, channel selection, date formatting, sort options
-│  │     └─ i18n/        # vue-i18n setup and locale files
-│  └─ api/           # Placeholder for a future sync backend (Prisma) — not yet implemented
-├─ openspec/         # Spec-driven development data: specs, change proposals, archive
-└─ pnpm-workspace.yaml
-```
-
-## Getting started
-
-```bash
-pnpm install                          # install workspace dependencies
-pnpm --filter mobile run dev          # start the Vite dev server (browser preview)
-pnpm --filter mobile run build        # type-check and produce a production web build
-pnpm --filter mobile run db:generate  # regenerate the SQL migration after editing schema.ts
-```
-
-Android build:
-
-```bash
-cd apps/mobile
-npx cap sync android
-cd android && ./gradlew.bat assembleDebug
-```
-
-The latest debug APK is committed at `apps/mobile/releases/app-debug.apk` for handing out builds without requiring a local Gradle/JDK/SDK setup. See [`CLAUDE.md`](CLAUDE.md) for Windows-specific JDK configuration and emulator setup.
+The latest debug APK is committed at `releases/app-debug.apk` for handing out builds without requiring a local Gradle/JDK/SDK setup. See [`CLAUDE.md`](CLAUDE.md) for Windows-specific JDK configuration and emulator setup.
 
 ## Development process: spec-driven with OpenSpec
 
@@ -94,7 +58,7 @@ Not every change goes through OpenSpec — small, purely mechanical fixes (a col
 
 ## Status
 
-The Codes list, coupon creation/detail/deletion, channel management, and the Calendar month view are all live screens backed by a real on-device SQLite database — no screen still reads mock data. Settings covers theming, a shared default sort order, and a feedback link. Android has a verified, buildable debug APK; iOS is not yet targeted. See [`CLAUDE.md`](CLAUDE.md) for the detailed, up-to-date project history and open questions.
+The Codes list, coupon creation/detail/deletion, channel management, and the Calendar month view are all live screens backed by a real on-device SQLite database — no screen still reads mock data. Settings covers theming, a shared default sort order, and a feedback link. Android has a verified, buildable debug APK; iOS is not yet targeted.
 
 ## License
 
